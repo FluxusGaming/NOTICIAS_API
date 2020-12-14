@@ -100,7 +100,25 @@ async function abc() {
     url: `https://www.abc.es/tecnologia${data.url}`,
   };
 }
-abc();
+async function bbc() {
+  const { data } = await scrapeIt(
+    "https://www.bbc.com/mundo/topics/cyx5krnw38vt",
+    {
+      title: {
+        listItem: ".lx-stream-post__header-link > .lx-stream-post__header-text",
+      },
+      url: {
+        selector: ".qa-heading-link",
+        attr: "href",
+      },
+    }
+  );
+  console.log(`https://www.bbc.com${data.url}`);
+  return {
+    title: data.title[0],
+    url: `https://www.bbc.com${data.url}`,
+  };
+}
 app.use(morgan("dev"));
 
 app.get("/", async (req, res) => {
@@ -112,6 +130,7 @@ app.get("/", async (req, res) => {
     eltiempo: await eltiempo(),
     wwwhatsnew: await wwwhatsnew(),
     abc: await abc(),
+    bbc: await bbc(),
   });
 });
 
