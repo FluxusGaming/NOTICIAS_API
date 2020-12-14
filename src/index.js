@@ -131,7 +131,7 @@ async function computerhoy() {
   });
   return {
     title: data.title[0],
-    url: `https://computerhoy.com/noticias${data.url}`,
+    url: `https://computerhoy.com${data.url}`,
   };
 }
 
