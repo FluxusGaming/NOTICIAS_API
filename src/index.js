@@ -113,10 +113,44 @@ async function bbc() {
       },
     }
   );
-  console.log(`https://www.bbc.com${data.url}`);
   return {
     title: data.title[0],
     url: `https://www.bbc.com${data.url}`,
+  };
+}
+
+async function computerhoy() {
+  const { data } = await scrapeIt("https://computerhoy.com/noticias", {
+    title: {
+      listItem: ".col-xs-12 > article",
+    },
+    url: {
+      selector: ".block-title > h3 > a",
+      attr: "href",
+    },
+  });
+  return {
+    title: data.title[0],
+    url: `https://computerhoy.com/noticias${data.url}`,
+  };
+}
+
+async function googlenews() {
+  const { data } = await scrapeIt(
+    "https://news.google.com/topstories?hl=es-419&gl=US&ceid=US:es-419",
+    {
+      title: {
+        listItem: ".Cc0Z5d > .ipQwMb",
+      },
+      url: {
+        selector: ".Cc0Z5d > .ipQwMb > a",
+        attr: "href",
+      },
+    }
+  );
+  return {
+    title: data.title[0],
+    url: `https://news.google.com${data.url.substring(1)}`,
   };
 }
 app.use(morgan("dev"));
@@ -131,6 +165,8 @@ app.get("/", async (req, res) => {
     wwwhatsnew: await wwwhatsnew(),
     abc: await abc(),
     bbc: await bbc(),
+    computerhoy: await computerhoy(),
+    googlenews: await googlenews(),
   });
 });
 
