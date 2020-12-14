@@ -83,6 +83,24 @@ async function gizmodo() {
 
   return { title: data.title[0], url: data.url };
 }
+
+async function abc() {
+  const { data } = await scrapeIt("https://www.abc.es/tecnologia/", {
+    title: {
+      selector: ".articulo-portada .imagen",
+      attr: "title",
+    },
+    url: {
+      selector: ".articulo-portada .imagen",
+      attr: "href",
+    },
+  });
+  return {
+    title: data.title,
+    url: `https://www.abc.es/tecnologia${data.url}`,
+  };
+}
+abc();
 app.use(morgan("dev"));
 
 app.get("/", async (req, res) => {
@@ -93,6 +111,7 @@ app.get("/", async (req, res) => {
     gizmodo: await gizmodo(),
     eltiempo: await eltiempo(),
     wwwhatsnew: await wwwhatsnew(),
+    abc: await abc(),
   });
 });
 
