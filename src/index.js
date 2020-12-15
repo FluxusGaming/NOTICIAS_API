@@ -97,7 +97,7 @@ async function abc() {
   });
   return {
     title: data.title,
-    url: `https://www.abc.es/tecnologia${data.url}`,
+    url: `https://www.abc.es${data.url}`,
   };
 }
 async function bbc() {
